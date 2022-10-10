@@ -3,11 +3,32 @@ import { MEALS } from "../data/dummy-data";
 import MealDetails from "../components/MealDetails";
 import Subtitle from "../components/MealDetail/Subtitle";
 import List from "../components/MealDetail/List";
+import IconButton from "../components/IconButton";
+import { useLayoutEffect } from "react";
 
-export default function MealDetaiScreen({ route }) {
+export default function MealDetaiScreen({ route, navigation }) {
   const mealId = route.params.mealId;
 
   const selectedMeal = MEALS.find((meal) => meal.id === mealId);
+
+  function headerButtonpressHandler() {
+    console.log("Press");
+  }
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => {
+        return (
+          <IconButton
+            icon="star"
+            color="white"
+            title="Tap me!"
+            onPress={headerButtonpressHandler}
+          />
+        );
+      },
+    });
+  }, [navigation, headerButtonpressHandler]);
   return (
     <View style={styles.rootContainer}>
       <ScrollView>
@@ -18,6 +39,7 @@ export default function MealDetaiScreen({ route }) {
           affordability={selectedMeal.affordability}
           complexity={selectedMeal.complexity}
           textStyle={styles.detailText}
+          onPress={headerButtonpressHandler}
         />
         <View style={styles.listOuterContainer}>
           <View style={styles.listContainer}>
