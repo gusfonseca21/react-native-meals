@@ -10,6 +10,7 @@ import MealDetaiScreen from "./screens/MealDetailScreen";
 import FavoritesScreen from "./screens/FavoritesScreen";
 
 import { Ionicons } from "@expo/vector-icons";
+import FavoritesContextProvider from "./store/context/favorites-context";
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -55,27 +56,32 @@ export default function App() {
   return (
     <>
       <StatusBar style="light" />
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerStyle: { backgroundColor: "#0bf" },
-            headerTintColor: "#fff",
-            contentStyle: { backgroundColor: "#aff" },
-          }}
-        >
-          <Stack.Screen
-            name="MealsCategories"
-            component={DrawerNavigator}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen name="MealsOverview" component={MealsOverviewScreen} />
-          <Stack.Screen
-            name="MealDetail"
-            component={MealDetaiScreen}
-            options={{ title: "About the Meal" }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <FavoritesContextProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{
+              headerStyle: { backgroundColor: "#0bf" },
+              headerTintColor: "#fff",
+              contentStyle: { backgroundColor: "#aff" },
+            }}
+          >
+            <Stack.Screen
+              name="MealsCategories"
+              component={DrawerNavigator}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="MealsOverview"
+              component={MealsOverviewScreen}
+            />
+            <Stack.Screen
+              name="MealDetail"
+              component={MealDetaiScreen}
+              options={{ title: "About the Meal" }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </FavoritesContextProvider>
     </>
   );
 }
